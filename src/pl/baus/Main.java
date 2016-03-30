@@ -4,9 +4,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        printLetters();
-        printBoard();
+        char board [][] = new char[10][10];
+        fillBoard(board);
 
+        printLetters();
+        printBoard(board);
+        printLetters();
+        printBoard(board);
+
+    }
+
+    private static void fillBoard(char[][] board) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                board[i][j] = getRandomShips(Math.random());
+            }
+        }
     }
 
     static void printLetters(){
@@ -17,14 +30,15 @@ public class Main {
         System.out.print('\n');
     }
 
-    static void printBoard(){
-        for (int i = 0; i <= 10; i++) {
-            if(i < 10){
+    static void printBoard(char [][] board){
+        for (int i = 0; i <= 9; i++) {
+            int numberToPrint = i + 1;
+            if(numberToPrint < 10){
                 System.out.print(' ');
             }
-            System.out.print(i);
+            System.out.print(numberToPrint);
             for (int j = 0; j < 10; j++) {
-                char shipValue = getRandomShips(Math.random());
+                char shipValue = board[i][j];
                 System.out.print(shipValue);
             }
             System.out.print('\n');
