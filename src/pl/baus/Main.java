@@ -2,9 +2,13 @@ package pl.baus;
 
 public class Main {
 
+    enum State {
+        EMPTY, SUNK , HIT , MISS
+    }
+
     public static void main(String[] args) {
 
-        char board [][] = new char[10][10];
+        State board [][] = new State[10][10];
         fillBoard(board);
 
         printLetters();
@@ -14,7 +18,7 @@ public class Main {
 
     }
 
-    private static void fillBoard(char[][] board) {
+    private static void fillBoard(State[][] board) {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 board[i][j] = getRandomShips(Math.random());
@@ -30,7 +34,7 @@ public class Main {
         System.out.print('\n');
     }
 
-    static void printBoard(char [][] board){
+    static void printBoard(State [][] board){
         for (int i = 0; i <= 9; i++) {
             int numberToPrint = i + 1;
             if(numberToPrint < 10){
@@ -38,18 +42,36 @@ public class Main {
             }
             System.out.print(numberToPrint);
             for (int j = 0; j < 10; j++) {
-                char shipValue = board[i][j];
+                char shipValue = stateToChar(board[i][j]);
                 System.out.print(shipValue);
             }
             System.out.print('\n');
         }
     }
 
-    private static char getRandomShips(double random) {
+    private static char stateToChar(State state) {
+        char value;
+        switch (state){
+            case EMPTY:
+                value = ' ';
+                break;
+            case HIT:
+                value = 'O';
+                break;
+            default:
+                value = '?';
+                break;
+        }
+        return value;
+    }
+
+    private static State getRandomShips(double random) {
         if(random < 0.2) {
-            return ('O');
+            return State.HIT;
+        }else if(random > 0.8) {
+            return State.EMPTY;
         }else {
-            return (' ');
+            return State.MISS;
         }
     }
 }
